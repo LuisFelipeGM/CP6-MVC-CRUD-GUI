@@ -1,3 +1,8 @@
+/*Daniel Henrique Alcantara Oliveira Martins  RM: 94615
+* Luis Felipe Garcia Menezes  RM: 94051
+* Pedro Victor Saraiva de Sa  RM: 93627
+*/
+
 package fiap.view;
 
 import java.awt.*;
@@ -20,12 +25,12 @@ public class GUIFilmes extends JPanel {
 	private JScrollPane sp;
 	private JButton btPesquisa, btNovo, btAtualiza, btApaga;
 	private ButtonGroup btGroup;
-	
+
 	public GUIFilmes() {
 		inicializarComponentes();
 		definirEventos();
 	}
-	
+
 	public void inicializarComponentes() {
 		setLayout(null);
 		setBackground(Color.lightGray);
@@ -33,12 +38,12 @@ public class GUIFilmes extends JPanel {
 		lbTitulo = new JLabel("Titulo:");
 		tfCodigo = new JTextField();
 		tfTitulo = new JTextField();
-		
+
 		btPesquisa = new JButton(new ImageIcon(getClass().getResource("imagens/search_icon.png")));
 		btNovo = new JButton(new ImageIcon(getClass().getResource("imagens/new_icon.png")));
 		btAtualiza = new JButton(new ImageIcon(getClass().getResource("imagens/update_icon.png")));
 		btApaga = new JButton(new ImageIcon(getClass().getResource("imagens/delete_icon.png")));
-		
+
 		lbProdutora = new JLabel("Produtora:");
 		rbWarner = new JRadioButton("Warner");
 		rbWarner.setBackground(getBackground());
@@ -46,48 +51,48 @@ public class GUIFilmes extends JPanel {
 		rbFox.setBackground(getBackground());
 		rbDisney = new JRadioButton("Disney");
 		rbDisney.setBackground(getBackground());
-		rbUniversal= new JRadioButton("Universal");
+		rbUniversal = new JRadioButton("Universal");
 		rbUniversal.setBackground(getBackground());
 		btGroup = new ButtonGroup();
 		btGroup.add(rbWarner);
 		btGroup.add(rbFox);
 		btGroup.add(rbDisney);
 		btGroup.add(rbUniversal);
-		
-		String[] fotos = new String[5];
+
+		String[] fotos = new String[6];
 		fotos[0] = "Fantasia";
 		fotos[1] = "Infantil";
 		fotos[2] = "Medieval";
 		fotos[3] = "Nordico";
 		fotos[4] = "Terror";
-        
-        liFotos = new JList<String>(fotos);
-        sp = new JScrollPane(liFotos);
-        lbGenero = new JLabel("Genero:");
-        imagem1 = new ImageIcon();
-        lbImagem = new JLabel(imagem1);
-		
-		
+		fotos[5] = "";
+
+		liFotos = new JList<String>(fotos);
+		sp = new JScrollPane(liFotos);
+		lbGenero = new JLabel("Genero:");
+		imagem1 = new ImageIcon();
+		lbImagem = new JLabel(imagem1);
+
 		lbCodigo.setBounds(20, 40, 60, 25);
 		tfCodigo.setBounds(80, 40, 60, 25);
 		lbTitulo.setBounds(20, 75, 60, 25);
 		tfTitulo.setBounds(80, 75, 230, 25);
-		
+
 		lbProdutora.setBounds(20, 150, 70, 25);
 		rbWarner.setBounds(30, 175, 100, 25);
 		rbFox.setBounds(30, 200, 100, 25);
 		rbDisney.setBounds(30, 225, 100, 25);
 		rbUniversal.setBounds(30, 250, 100, 25);
-		
+
 		lbGenero.setBounds(375, 30, 60, 25);
 		sp.setBounds(375, 75, 120, 110);
 		lbImagem.setBounds(520, 20, 220, 220);
-		
-		btPesquisa.setBounds(150,350,60,40);
-		btNovo.setBounds(290,350,60,40);
-		btAtualiza.setBounds(430,350,60,40);
-		btApaga.setBounds(570,350,60,40);
-		
+
+		btPesquisa.setBounds(150, 350, 60, 40);
+		btNovo.setBounds(290, 350, 60, 40);
+		btAtualiza.setBounds(430, 350, 60, 40);
+		btApaga.setBounds(570, 350, 60, 40);
+
 		add(lbCodigo);
 		add(tfCodigo);
 		add(lbTitulo);
@@ -105,138 +110,160 @@ public class GUIFilmes extends JPanel {
 		add(btAtualiza);
 		add(btApaga);
 
-		
 	}
-	
+
 	public void definirEventos() {
-		
-		 liFotos.addListSelectionListener(new ListSelectionListener() {
-	            public void valueChanged(ListSelectionEvent e) {
-	                imagem1 = new ImageIcon(getClass().getResource("Imagens/" + 
-	                					liFotos.getSelectedValue() + ".png"));
-	                lbImagem.setIcon(imagem1);
-	            }
-	     });
-	        
-	    
-		btApaga.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FilmeController filme = new FilmeController();
-				if (tfCodigo.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Preencha a Placa");
-					tfCodigo.requestFocus();
-				} else {
-					JOptionPane.showMessageDialog(null, filme.excluiFilme(tfCodigo.getText()));
-					tfCodigo.setText("");
-					tfTitulo.setText("");
+
+		liFotos.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if ( liFotos.getSelectedValue().equals("")) {
+					lbImagem.setIcon(imagem1);
+				}else {
+					imagem1 = new ImageIcon(getClass().getResource("Imagens/" + liFotos.getSelectedValue() + ".png"));
+					lbImagem.setIcon(imagem1);
 				}
-				
 			}
 		});
-		
-		btAtualiza.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FilmeController filme = new FilmeController();
-				if (tfCodigo.getText().equals("") || tfTitulo.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
-				} else {
-					String prod = "";
-					if(rbWarner.isSelected()) {
-						prod = "Warner";
-					}else if(rbFox.isSelected()){
-						prod = "Fox";
-					}else if(rbDisney.isSelected()){
-						prod = "Disney";
-					}else if(rbUniversal.isSelected()){
-						prod = "Universal";
-					}
-					
-					JOptionPane.showMessageDialog(null, filme.alteraFilme(tfCodigo.getText(), tfTitulo.getText(),
-							liFotos.getSelectedValue(), prod));
-					tfCodigo.setText("");
-					tfTitulo.setText("");
-				}
-				
-			}
-		});
-		
+
 		btNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FilmeController filme = new FilmeController();
 				String prod = "";
-				if(rbWarner.isSelected()) {
+				if (rbWarner.isSelected()) {
 					prod = "Warner";
-				}else if(rbFox.isSelected()){
+				} else if (rbFox.isSelected()) {
 					prod = "Fox";
-				}else if(rbDisney.isSelected()){
+				} else if (rbDisney.isSelected()) {
 					prod = "Disney";
-				}else if(rbUniversal.isSelected()){
+				} else if (rbUniversal.isSelected()) {
 					prod = "Universal";
-				}else {
+				} else {
 					prod = "";
 				}
 				if (tfCodigo.getText().equals("") || tfTitulo.getText().equals("") || prod.equals("")) {
 					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
 				} else {
-					
-					JOptionPane.showMessageDialog(null, filme.insereFilme(tfCodigo.getText(), tfTitulo.getText(),
-							liFotos.getSelectedValue(), prod));
-					tfCodigo.setText("");
-					tfTitulo.setText("");
+					if (liFotos.isSelectionEmpty()) {
+						JOptionPane.showMessageDialog(null, "Selecione um genero");
+					} else {
+						JOptionPane.showMessageDialog(null, filme.insereFilme(tfCodigo.getText(), tfTitulo.getText(),
+								liFotos.getSelectedValue(), prod));
+						tfCodigo.setText("");
+						tfTitulo.setText("");
+						rbWarner.setSelected(true);
+						liFotos.setSelectedIndex(5);
+						lbImagem.setIcon(null);
+						
+					}
+
 				}
-				
 			}
 		});
-		
+
+		btAtualiza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FilmeController filme = new FilmeController();
+				String prod = "";
+				if (rbWarner.isSelected()) {
+					prod = "Warner";
+				} else if (rbFox.isSelected()) {
+					prod = "Fox";
+				} else if (rbDisney.isSelected()) {
+					prod = "Disney";
+				} else if (rbUniversal.isSelected()) {
+					prod = "Universal";
+				} else {
+					prod = "";
+				}
+				if (tfCodigo.getText().equals("") || tfTitulo.getText().equals("") || prod.equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				} else {
+					if (liFotos.isSelectionEmpty()) {
+						JOptionPane.showMessageDialog(null, "Selecione um genero");
+					} else {
+						JOptionPane.showMessageDialog(null, filme.alteraFilme(tfCodigo.getText(), tfTitulo.getText(),
+								liFotos.getSelectedValue(), prod));
+						tfCodigo.setText("");
+						tfTitulo.setText("");
+						rbWarner.setSelected(true);
+						liFotos.setSelectedIndex(5);
+						lbImagem.setIcon(null);
+					}
+
+				}
+
+			}
+		});
+
+		btApaga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FilmeController filme = new FilmeController();
+				if (tfCodigo.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Preencha o codigo");
+					tfCodigo.requestFocus();
+				} else {
+					JOptionPane.showMessageDialog(null, filme.excluiFilme(tfCodigo.getText()));
+					tfCodigo.setText("");
+					tfTitulo.setText("");
+					rbWarner.setSelected(true);
+					liFotos.setSelectedIndex(5);
+					lbImagem.setIcon(null);
+				}
+
+			}
+		});
+
 		btPesquisa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FilmeController filme = new FilmeController();
 				ArrayList<String> dados = new ArrayList<String>();
 				if (tfCodigo.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Preencha a Placa");
+					JOptionPane.showMessageDialog(null, "Preencha o codigo");
 					tfCodigo.requestFocus();
 				} else {
 					dados = filme.listaFilme(tfCodigo.getText());
-					if (dados != null) {
+					if (dados.isEmpty() == false) {
 						tfTitulo.setText(dados.get(1));
-						
-						if(dados.get(3).equals("Warner")) {
+
+						if (dados.get(3).equals("Warner")) {
 							rbWarner.setSelected(true);
-						}else if(dados.get(3).equals("Fox")){
+						} else if (dados.get(3).equals("Fox")) {
 							rbFox.setSelected(true);
-						}else if(dados.get(3).equals("Disney")){
+						} else if (dados.get(3).equals("Disney")) {
 							rbDisney.setSelected(true);
-						}else if(dados.get(3).equals("Universal")){
+						} else if (dados.get(3).equals("Universal")) {
 							rbUniversal.setSelected(true);
 						}
-						
+
 						if (dados.get(2).equals("Fantasia")) {
 							imagem1 = new ImageIcon(getClass().getResource("Imagens/Fantasia.png"));
 							lbImagem.setIcon(imagem1);
-						} else if(dados.get(2).equals("Infantil")){
+							liFotos.setSelectedIndex(0);
+						} else if (dados.get(2).equals("Infantil")) {
 							imagem1 = new ImageIcon(getClass().getResource("Imagens/Infantil.png"));
 							lbImagem.setIcon(imagem1);
+							liFotos.setSelectedIndex(1);
 						} else if (dados.get(2).equals("Medieval")) {
 							imagem1 = new ImageIcon(getClass().getResource("Imagens/Medieval.png"));
 							lbImagem.setIcon(imagem1);
+							liFotos.setSelectedIndex(2);
 						} else if (dados.get(2).equals("Nordico")) {
 							imagem1 = new ImageIcon(getClass().getResource("Imagens/Nordico.png"));
 							lbImagem.setIcon(imagem1);
+							liFotos.setSelectedIndex(3);
 						} else if (dados.get(2).equals("Terror")) {
 							imagem1 = new ImageIcon(getClass().getResource("Imagens/Terror.png"));
 							lbImagem.setIcon(imagem1);
+							liFotos.setSelectedIndex(4);
 						}
 
 					} else {
 						JOptionPane.showMessageDialog(null, "Registro inexistente");
 					}
 				}
-				
-				
+
 			}
 		});
-		
-		
-		
+
 	}
 }

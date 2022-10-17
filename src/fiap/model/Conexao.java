@@ -1,6 +1,6 @@
 /*Daniel Henrique Alcantara Oliveira Martins  RM: 94615
-* Luís Felipe Garcia Menezes  RM: 94051
-* Pedro Victor Saraiva de Sá  RM: 93627
+* Luis Felipe Garcia Menezes  RM: 94051
+* Pedro Victor Saraiva de Sa  RM: 93627
 */
 
 package fiap.model;
@@ -16,7 +16,7 @@ public class Conexao {
 			final String USER = "RM94615";
 			final String PASS = "170504";
 			con = DriverManager.getConnection(url, USER, PASS);
-			//System.out.println("Conexão Aberta!");
+			//System.out.println("Conexï¿½o Aberta!");
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
@@ -30,7 +30,7 @@ public class Conexao {
 	public static void fecharConexao(Connection con) {
 		try {
 			con.close();
-			//System.out.println("Conexão fechada!");
+			//System.out.println("Conexï¿½o fechada!");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} catch (Exception e) {

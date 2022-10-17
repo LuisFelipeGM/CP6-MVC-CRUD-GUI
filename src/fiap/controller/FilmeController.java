@@ -1,3 +1,8 @@
+/*Daniel Henrique Alcantara Oliveira Martins  RM: 94615
+* Luis Felipe Garcia Menezes  RM: 94051
+* Pedro Victor Saraiva de Sa  RM: 93627
+*/
+
 package fiap.controller;
 
 import java.sql.*;
@@ -51,7 +56,6 @@ public class FilmeController {
 			FilmeDAO filmeDAO = new FilmeDAO(con);
 			resultado = filmeDAO.listarUm(codigo);
 			Conexao.fecharConexao(con);
-			//System.out.println(resultado);
 			if (resultado != null) {
 				return resultado;
 			} else {

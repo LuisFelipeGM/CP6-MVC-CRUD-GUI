@@ -1,3 +1,8 @@
+/*Daniel Henrique Alcantara Oliveira Martins  RM: 94615
+* Luis Felipe Garcia Menezes  RM: 94051
+* Pedro Victor Saraiva de Sa  RM: 93627
+*/
+
 package fiap.model;
 
 import java.util.ArrayList;
